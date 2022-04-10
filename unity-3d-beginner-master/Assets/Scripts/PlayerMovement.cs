@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class PlayerMovement : MonoBehaviour
     public Transform teleportDesitination;
     public Transform teleportDesitination2;
 
+    private int health;
+    public TextMeshProUGUI healthText;
+
     
     // Start is called before the first frame update
     void Start()
@@ -21,6 +25,9 @@ public class PlayerMovement : MonoBehaviour
       m_Animator = GetComponent<Animator>();
       m_Rigidbody = GetComponent<Rigidbody>();
       m_AudioSource = GetComponent<AudioSource>();
+
+      health = 60;
+      SetHealthText();
     }
 
     // FixedUpdate is called every fixed framerate frame
@@ -59,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
     }
    void OnTriggerEnter(Collider other)
    {
+
       if (other.gameObject.CompareTag ("Teleport"))
 		{
         transform.position = teleportDesitination.position;
@@ -68,5 +76,16 @@ public class PlayerMovement : MonoBehaviour
 		{
         transform.position = teleportDesitination2.position;
 		}
+
+    if (other.gameObject.CompareTag ("Damage"))
+		{
+			health = health - 20;
+      SetHealthText ();
+      other.gameObject.SetActive (false);
+    }
+   }
+   void SetHealthText()
+   {
+     healthText.text = "Health: " + health.ToString();
    }
 }
