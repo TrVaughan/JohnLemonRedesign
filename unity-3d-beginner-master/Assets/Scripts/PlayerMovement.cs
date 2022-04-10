@@ -18,6 +18,9 @@ public class PlayerMovement : MonoBehaviour
     private int health;
     public TextMeshProUGUI healthText;
 
+    private int tokens;
+    public TextMeshProUGUI tokenCount;
+
     
     // Start is called before the first frame update
     void Start()
@@ -27,7 +30,9 @@ public class PlayerMovement : MonoBehaviour
       m_AudioSource = GetComponent<AudioSource>();
 
       health = 60;
+      tokens = 0;
       SetHealthText();
+      SetTokenCount();
     }
 
     // FixedUpdate is called every fixed framerate frame
@@ -64,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
       m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
       m_Rigidbody.MoveRotation(m_Rotation);
     }
+
    void OnTriggerEnter(Collider other)
    {
 
@@ -73,19 +79,33 @@ public class PlayerMovement : MonoBehaviour
 		}
 
         if (other.gameObject.CompareTag ("Teleport2"))
-		{
+		  {
         transform.position = teleportDesitination2.position;
-		}
+	  	}
 
-    if (other.gameObject.CompareTag ("Damage"))
-		{
-			health = health - 20;
-      SetHealthText ();
-      other.gameObject.SetActive (false);
+      if (other.gameObject.CompareTag ("Damage"))
+      {
+        health = health - 20;
+        SetHealthText ();
+        other.gameObject.SetActive (false);
+      }
+
+      if (other.gameObject.CompareTag ("Token"))
+      {
+        tokens = tokens +10;
+        SetTokenCount();
+        other.gameObject.SetActive (false);
+      }
     }
-   }
-   void SetHealthText()
-   {
-     healthText.text = "Health: " + health.ToString();
-   }
+
+    void SetHealthText()
+    {
+      healthText.text = "Health: " + health.ToString();
+    }
+
+    void SetTokenCount()
+    {
+      tokenCount.text = "Tokens: " + tokens.ToString();
+    }
+
 }

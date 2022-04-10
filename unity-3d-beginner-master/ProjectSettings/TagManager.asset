@@ -7,6 +7,7 @@ TagManager:
   - Teleport
   - Teleport2
   - Damage
+  - Token
   layers:
   - Default
   - TransparentFX
