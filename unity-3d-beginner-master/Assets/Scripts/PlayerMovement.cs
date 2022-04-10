@@ -11,6 +11,9 @@ public class PlayerMovement : MonoBehaviour
     Vector3 m_Movement;
     Quaternion m_Rotation = Quaternion.identity;
 
+    public Transform teleportDesitination;
+    public Transform teleportDesitination2;
+
     
     // Start is called before the first frame update
     void Start()
@@ -54,4 +57,16 @@ public class PlayerMovement : MonoBehaviour
       m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
       m_Rigidbody.MoveRotation(m_Rotation);
     }
+   void OnTriggerEnter(Collider other)
+   {
+      if (other.gameObject.CompareTag ("Teleport"))
+		{
+        transform.position = teleportDesitination.position;
+		}
+
+        if (other.gameObject.CompareTag ("Teleport2"))
+		{
+        transform.position = teleportDesitination2.position;
+		}
+   }
 }
