@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement; 
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -92,9 +93,14 @@ public class PlayerMovement : MonoBehaviour
 
       if (other.gameObject.CompareTag ("Token"))
       {
-        tokens = tokens +10;
+        tokens = tokens +1;
         SetTokenCount();
         other.gameObject.SetActive (false);
+        if (tokens == 4)
+          {
+            SceneManager.LoadScene("MainScene");
+            //Application.Quit ();
+          }
       }
     }
 
